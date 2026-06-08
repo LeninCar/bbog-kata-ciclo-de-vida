@@ -67,7 +67,7 @@ docker run --rm -p 9090:9090 --env-file .env.prod customers-api
 ## Docker usando imagen remota
 
 ```bash
-docker build -t leninecm/customers-api:v1 .
+docker pull leninecm/customers-api:v1
 ```
 
 Ejecutar DEV con Docker:
