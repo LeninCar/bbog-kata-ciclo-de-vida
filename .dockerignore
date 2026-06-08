@@ -7,3 +7,5 @@ database.sqlite
 coverage
 dist
 build
+data/
+*.sqlite

@@ -7,9 +7,14 @@ function isValidEmail(email) {
 
 async function createCustomer(customerData) {
   const { name, email } = customerData;
+  const nameRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
 
   if (!name) {
     throw new AppError('Name is required', 400);
+  }
+
+  if (!nameRegex.test(name)) {
+    throw new AppError('Name contains invalid characters', 400);
   }
 
   if (!email) {
