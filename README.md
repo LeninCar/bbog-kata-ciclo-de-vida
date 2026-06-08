@@ -4,8 +4,8 @@ Backend Node.js + Express para registrar y consultar clientes, con configuració
 
 ## Despliegues Render y Docker
 
-* DEV: https://customers-api-dev.onrender.com
-* PROD: https://customers-api-prod.onrender.com
+* DEV: https://customers-api-dev.onrender.com/health
+* PROD: https://customers-api-prod.onrender.com/health
 
 * Docker: https://hub.docker.com/repository/docker/leninecm/customers-api
 
