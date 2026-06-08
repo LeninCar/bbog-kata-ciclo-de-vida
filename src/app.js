@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-
+const config = require("./config/env")
 const customerRoutes = require('./routes/customer.routes');
 
 const app = express();
@@ -13,6 +13,15 @@ app.get('/', (req, res) => {
     message: 'Customers API is running'
   });
 });
+
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "UP",
+    environment: config.environment,
+    appName: config.appName,
+    appMessage: config.appMessage,
+  })
+})
 
 app.use('/api/customers', customerRoutes);
 
