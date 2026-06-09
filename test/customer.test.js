@@ -3,6 +3,9 @@ const app = require('../src/app');
 const sequelize = require('../src/config/database');
 const Customer = require('../src/models/customer.model');
 
+const HTTP_STATUS = require('../src/constants/httpStatus');
+const MESSAGES = require('../src/constants/messages');
+
 beforeAll(async () => {
   await sequelize.sync({ force: true });
 });
@@ -19,8 +22,8 @@ describe('Customer API', () => {
   test('should return API status', async () => {
     const response = await request(app).get('/');
 
-    expect(response.statusCode).toBe(200);
-    expect(response.body.message).toBe('Customers API is running');
+    expect(response.statusCode).toBe(HTTP_STATUS.OK);
+    expect(response.body.message).toBe(MESSAGES.API_RUNNING);
   });
 
   test('should create a customer', async () => {
@@ -31,8 +34,8 @@ describe('Customer API', () => {
         email: 'juan@email.com'
       });
 
-    expect(response.statusCode).toBe(201);
-    expect(response.body.message).toBe('Customer created successfully');
+    expect(response.statusCode).toBe(HTTP_STATUS.CREATED);
+    expect(response.body.message).toBe(MESSAGES.CUSTOMER_CREATED);
     expect(response.body.data.name).toBe('Juan Perez');
     expect(response.body.data.email).toBe('juan@email.com');
   });
@@ -47,7 +50,7 @@ describe('Customer API', () => {
 
     const response = await request(app).get('/api/customers');
 
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(HTTP_STATUS.OK);
     expect(response.body.data.length).toBe(1);
   });
 
@@ -58,8 +61,8 @@ describe('Customer API', () => {
         email: 'juan@email.com'
       });
 
-    expect(response.statusCode).toBe(400);
-    expect(response.body.message).toBe('Name is required');
+    expect(response.statusCode).toBe(HTTP_STATUS.BAD_REQUEST);
+    expect(response.body.message).toBe(MESSAGES.NAME_REQUIRED);
   });
 
   test('should return 400 when email is missing', async () => {
@@ -69,8 +72,8 @@ describe('Customer API', () => {
         name: 'Juan Perez'
       });
 
-    expect(response.statusCode).toBe(400);
-    expect(response.body.message).toBe('Email is required');
+    expect(response.statusCode).toBe(HTTP_STATUS.BAD_REQUEST);
+    expect(response.body.message).toBe(MESSAGES.EMAIL_REQUIRED);
   });
 
   test('should return 400 when email format is invalid', async () => {
@@ -81,7 +84,7 @@ describe('Customer API', () => {
         email: 'juan'
       });
 
-    expect(response.statusCode).toBe(400);
-    expect(response.body.message).toBe('Email format is invalid');
+    expect(response.statusCode).toBe(HTTP_STATUS.BAD_REQUEST);
+    expect(response.body.message).toBe(MESSAGES.EMAIL_INVALID);
   });
 });
